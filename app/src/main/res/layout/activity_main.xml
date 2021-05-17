@@ -5,14 +5,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/resetButton"
+    android:text="Reset"
+    app:layout_constraintRight_toLeftOf="@id/recordButton"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="@id/recordButton"
+    app:layout_constraintBottom_toBottomOf="@id/recordButton"
+    tools:ignore="HardcodedText" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/recordTextView"
+        app:layout_constraintLeft_toLeftOf="@id/recordButton"
+        app:layout_constraintRight_toRightOf="@id/recordButton"
+        app:layout_constraintBottom_toTopOf="@id/recordButton"
+        android:text="00:00"
+        android:layout_marginBottom="20dp"
+        tools:ignore="HardcodedText" />
 
+<com.example.mediarecorder.RecordButton
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:id="@+id/recordButton"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginBottom="50dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
