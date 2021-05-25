@@ -11,6 +11,9 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
+    private val soundVisualizerView : SoundVisualizerView by lazy {
+        findViewById<SoundVisualizerView>(R.id.SoundVisualizerView)
+    }
     private val requiredPermissions = arrayOf(
         Manifest.permission.RECORD_AUDIO,
         Manifest.permission.READ_EXTERNAL_STORAGE
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var state : State = State.BEFORE_RECORDING
     set(value) {
         field = value
+        resetButton.isEnabled =(value == State.AFTER_RECORDING) || (value == State.ON_PLAYING)
         recordButton.updateIconWithState(value)
     }
 
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         requestPermission()
         initViews()
         bindViews()
+        initVariables()
     }
 
     override fun onRequestPermissionsResult(
@@ -64,9 +69,17 @@ class MainActivity : AppCompatActivity() {
         recordButton.updateIconWithState(state)
     }
 private fun bindViews(){
-    resetButton.setOnClickListener {
-        
+    soundVisualizerView.onRequestCurrentAmplitude = {
+            recorder?.maxAmplitude ?:0
+
     }
+    resetButton.setOnClickListener {
+        stopPlaying()
+        state = State.BEFORE_RECORDING
+
+    }
+
+
     recordButton.setOnClickListener {
         when(state){
             State.BEFORE_RECORDING-> startRecording()
@@ -76,6 +89,9 @@ private fun bindViews(){
         }
     }
 }
+    private fun initVariables(){
+        state  = State.BEFORE_RECORDING
+    }
     private fun startRecording(){
         recorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -85,6 +101,7 @@ private fun bindViews(){
             prepare()
         }
         recorder?.start()
+        soundVisualizerView.startVisualizing(false)
         state = State.ON_RECORDING
     }
 
@@ -95,6 +112,7 @@ private fun bindViews(){
         }
         player?.start()
         state = State.ON_PLAYING
+        soundVisualizerView.startVisualizing(true)
 
     }
 
@@ -102,6 +120,7 @@ private fun bindViews(){
         player?.release()
         player = null
         state = State.AFTER_RECORDING
+        soundVisualizerView.stopVisualizing()
     }
     private fun stopRecording(){
         recorder?.run {
@@ -109,6 +128,7 @@ private fun bindViews(){
             release()
         }
         recorder = null
+        soundVisualizerView.stopVisualizing()
         state = State.AFTER_RECORDING
     }
     companion object{
