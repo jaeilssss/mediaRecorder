@@ -8,9 +8,13 @@ import androidx.appcompat.widget.AppCompatTextView
 class CountUpView(context: Context , attributeSet: AttributeSet) :AppCompatTextView(context,attributeSet){
 
     private var startTimeStamp :Long =  0L
+
     private val countUpAction :Runnable = object :Runnable{
+
         override fun run() {
+
         val currentTimeStamp = SystemClock.elapsedRealtime()
+
         }
 
     }
