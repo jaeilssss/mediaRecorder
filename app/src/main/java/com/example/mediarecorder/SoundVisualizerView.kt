@@ -111,7 +111,14 @@ class SoundVisualizerView(
 
     }
     fun stopVisualizing(){
+        replayingPosition = 0
         handler?.removeCallbacks(visualizeRepeatAction)
+
+    }
+
+    fun clearVisualizer(){
+        drawingAmplitudes = emptyList()
+        invalidate()
     }
     companion object{
         private const val LINE_WIDTH = 10F

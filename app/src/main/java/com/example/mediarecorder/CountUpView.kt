@@ -35,4 +35,8 @@ class CountUpView(context: Context , attributeSet: AttributeSet) :AppCompatTextV
         val seconds = countTimeSeconds % 60
         text = "%02d:%02d".format(minutes,seconds)
     }
+
+     fun clearCountTime(){
+         updateCountTime(0)
+     }
 }

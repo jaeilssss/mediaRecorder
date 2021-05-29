@@ -77,7 +77,11 @@ private fun bindViews(){
 
     }
     resetButton.setOnClickListener {
+
         stopPlaying()
+        soundVisualizerView.stopVisualizing()
+        countUpView.clearCountTime()
+        soundVisualizerView.clearVisualizer()
         state = State.BEFORE_RECORDING
 
     }
@@ -114,10 +118,17 @@ private fun bindViews(){
             setDataSource(recordingFilePath)
             prepare()
         }
+
+
         player?.start()
         state = State.ON_PLAYING
         countUpView.startCountUp()
         soundVisualizerView.startVisualizing(true)
+
+        player?.setOnCompletionListener {
+            stopPlaying()
+            state = State.AFTER_RECORDING
+        }
 
     }
 
