@@ -14,7 +14,10 @@ class CountUpView(context: Context , attributeSet: AttributeSet) :AppCompatTextV
         override fun run() {
 
         val currentTimeStamp = SystemClock.elapsedRealtime()
+            val countTimeSeconds = ((currentTimeStamp - startTimeStamp)/1000L).toInt()
+            updateCountTime(countTimeSeconds)
 
+            handler?.postDelayed(this,1000L)
         }
 
     }
@@ -25,5 +28,11 @@ class CountUpView(context: Context , attributeSet: AttributeSet) :AppCompatTextV
     }
     fun stopCountUp(){
         handler?.removeCallbacks(countUpAction)
+    }
+
+    private fun updateCountTime(countTimeSeconds : Int){
+        val minutes = countTimeSeconds / 60
+        val seconds = countTimeSeconds % 60
+        text = "%02d:%02d".format(minutes,seconds)
     }
 }

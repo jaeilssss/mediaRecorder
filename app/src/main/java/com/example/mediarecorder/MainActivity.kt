@@ -11,6 +11,9 @@ import android.widget.Button
 
 class MainActivity : AppCompatActivity() {
 
+    private val countUpView : CountUpView by lazy {
+        findViewById<CountUpView>(R.id.recordTextView)
+    }
     private val soundVisualizerView : SoundVisualizerView by lazy {
         findViewById<SoundVisualizerView>(R.id.SoundVisualizerView)
     }
@@ -98,6 +101,7 @@ private fun bindViews(){
             setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
             setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
             setOutputFile(recordingFilePath)
+            countUpView.startCountUp()
             prepare()
         }
         recorder?.start()
@@ -112,6 +116,7 @@ private fun bindViews(){
         }
         player?.start()
         state = State.ON_PLAYING
+        countUpView.startCountUp()
         soundVisualizerView.startVisualizing(true)
 
     }
@@ -120,6 +125,7 @@ private fun bindViews(){
         player?.release()
         player = null
         state = State.AFTER_RECORDING
+        countUpView.stopCountUp()
         soundVisualizerView.stopVisualizing()
     }
     private fun stopRecording(){
@@ -128,6 +134,7 @@ private fun bindViews(){
             release()
         }
         recorder = null
+        countUpView.stopCountUp()
         soundVisualizerView.stopVisualizing()
         state = State.AFTER_RECORDING
     }

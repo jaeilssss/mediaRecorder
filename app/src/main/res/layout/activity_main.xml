@@ -23,7 +23,7 @@
     app:layout_constraintTop_toTopOf="@id/recordButton"
     app:layout_constraintBottom_toBottomOf="@id/recordButton"
     tools:ignore="HardcodedText" />
-    <TextView
+    <com.example.mediarecorder.CountUpView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/recordTextView"
